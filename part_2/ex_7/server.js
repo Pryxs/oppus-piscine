@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('../../config');
+const config = require('../../part_1/config');
 const {studentSchemaObject} = require('../studentSchema');
 const {Student} = require('./students');
 

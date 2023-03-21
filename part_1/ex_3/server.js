@@ -1,12 +1,16 @@
-const express = require('express');
-const fs = require('fs');
-const config = require('../../config');
+import express from 'express'
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url';
+import {config} from '../config.js'
+
+const dirname =  path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
 app.get('/', (req, res) => {
-    let html = fs.readFileSync('./part_1/views/base.html', 'utf8')
+    let html = fs.readFileSync(dirname + '/views/base.html', 'utf8')
     res.send(html)
 })
 
-app.listen(config.app.port)
+app.listen(config.app.port) 
