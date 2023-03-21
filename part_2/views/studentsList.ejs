@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>Créer</h2>
+        <form action="/" method="POST">
+            <label>Firstname : </label>
+            <input type="text" placeholder="Firstname" name="firstName"><br><br>
+    
+            <label>Lastname : </label>
+            <input type="text" placeholder="Lastname" name="lastName"><br><br>
+    
+            <label>Email : </label>
+            <input type="email" placeholder="Email" name="email"><br><br>
+    
+            <label>Phone : </label>
+            <input type="text" placeholder="" maxlength="10" name="phone"><br><br>
+    
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div>
+        <h2>Etudiants</h2>
+        <h3>Rechercher</h3>
+        <form action="/" method="GET">
+            <input type="text" id="query" name="firstName" placeholder="par prénom...">
+            <input type="text" id="query" name="lastName" placeholder="par nom...">
+
+            <select name="sort"> 
+                <option value="firstName">First name</option>
+                <option value="lastName">Last name</option>
+            </select>
+
+            <select name="order"> 
+                <option value="1">ASC</option>
+                <option value="-1">DESC</option>
+            </select>
+
+            <input type="submit" value="rechercher">
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>email</th>
+                    <th>phone</th>
+                    <th>validated</th>
+                    <th>admin</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0; i < students.length; i++) { %>
+                <tr>
+                    <td><%= students[i].firstName %></td>
+                    <td><%= students[i].lastName %></td>
+                    <td><%= students[i].email %></td>
+                    <td><%= students[i].phone %></td>
+                    <td><%= students[i].validated %></td>
+                    <td><%= students[i].admin %></td>
+                    <td>
+                        <a href="javascript:{}" onclick="openModal(event, '<%= JSON.stringify(students[i]) %>')">
+                            m
+                        </a>
+                        <a href="javascript:{}" onclick="confirmAction(event, '<%= students[i].firstName %>', '<%= students[i].id %>')">
+                            x
+                        </a>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="modal">
+        <form id="update-form" action="/" method="POST">
+            <label>Firstname : </label>
+            <input id="firstName" type="text" placeholder="Firstname" name="firstName"><br><br>
+    
+            <label>Lastname : </label>
+            <input id="lastName" type="text" placeholder="Lastname" name="lastName"><br><br>
+    
+            <label>Email : </label>
+            <input id="email" type="email" placeholder="Email" name="email"><br><br>
+    
+            <label>Phone : </label>
+            <input id="phone" type="text" placeholder="" maxlength="10" name="phone"><br><br>
+
+            <input id="id" type="hidden" name="id"><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    const modal = document.querySelector('#modal')
+    const updateForm = document.querySelector('#update-form')
+    const id = document.querySelector('#id')
+    const firstName = document.querySelector('#firstName')
+    const lastName= document.querySelector('#lastName')
+    const email = document.querySelector('#email')
+    const phone = document.querySelector('#phone')
+
+
+    function confirmAction(event, name, id){
+        let confirmDialog = confirm('Vous allez supprimer : ' + name);
+        if(confirmDialog){
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("DELETE", `/students/${id}`);
+            xhttp.onload = () => {
+                window.location.reload()
+            }
+            xhttp.send()
+        } else {
+            event.preventDefault();
+        }
+    }
+
+    function openModal(event, data){
+        currentStudent = JSON.parse(data)
+        console.log(currentStudent)
+
+        modal.style.display = "block"
+        id.value = currentStudent._id
+        firstName.value = currentStudent.firstName
+        lastName.value = currentStudent.lastName
+        email.value = currentStudent.email
+        phone.value = currentStudent.phone
+    }
+
+    updateForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("PUT", `/students/${id.value}`);
+        xhttp.setRequestHeader('Content-type', 'application/json')
+        xhttp.onload = (res) => {
+            window.location.reload()
+        }
+        
+        xhttp.send(JSON.stringify({
+            firstName : firstName.value,
+            lastName : lastName.value,
+            email : email.value,
+            phone : phone.value
+        }))
+        
+    })
+</script>
+
+</html>
+
+<style>
+    #modal{
+        display: none;
+    }
+
+    table{
+        margin-top: 1rem;
+        border: 1px solid black;
+        border-spacing: 0;
+    }
+    
+    th, td{
+        padding: .5rem 1rem;
+        text-align: left;
+    }
+
+    tr:nth-child(even) {
+        background-color: #eee;
+    }
+
+    #update-form{
+        margin-top: 1rem;
+    }
+</style>
