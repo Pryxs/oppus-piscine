@@ -20,6 +20,7 @@ StudentController.post('/', async (req, res) => {
     res.redirect('/');
 })
 
+
 StudentController.put('/students/:id', async (req, res) => {
     await studentService.update(req.params.id, req.body)
     res.redirect('/');

@@ -1,24 +1,23 @@
 {
-  "name": "part_1",
+  "name": "part_3",
   "version": "1.0.0",
   "description": "",
-  "main": "",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "start:ex_1": "NODE_ENV=DEVELOPMENT nodemon ./ex_1/server.js",
     "start:ex_2": "NODE_ENV=DEVELOPMENT nodemon ./ex_2/server.js",
     "start:ex_3": "NODE_ENV=DEVELOPMENT nodemon ./ex_3/server.js",
-    "start:ex_4": "NODE_ENV=DEVELOPMENT nodemon ./ex_4/server.js",
-    "start:ex_5": "NODE_ENV=DEVELOPMENT nodemon ./ex_5/server.js",
-    "start:ex_6": "NODE_ENV=DEVELOPMENT nodemon ./ex_6/server.js",
-    "start:ex_7": "NODE_ENV=DEVELOPMENT nodemon ./ex_7/server.js"
+    "start:ex_4": "NODE_ENV=DEVELOPMENT nodemon ./ex_4/server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
-    "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-joi-validation": "^5.0.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.2"
   }
 }
