@@ -59,23 +59,27 @@
                 </tr>
             </thead>
             <tbody>
-                <% for(let i=0; i < students.length; i++) { %>
-                <tr>
-                    <td><%= students[i].firstName %></td>
-                    <td><%= students[i].lastName %></td>
-                    <td><%= students[i].email %></td>
-                    <td><%= students[i].phone %></td>
-                    <td><%= students[i].validated %></td>
-                    <td><%= students[i].admin %></td>
-                    <td>
-                        <a href="javascript:{}" onclick="openModal(event, '<%= JSON.stringify(students[i]) %>')">
-                            m
-                        </a>
-                        <a href="javascript:{}" onclick="confirmAction(event, '<%= students[i].firstName %>', '<%= students[i].id %>')">
-                            x
-                        </a>
-                    </td>
-                </tr>
+                <% if(students){ %>
+
+                    <% for(let i=0; i < students.length; i++) { %>
+                    <tr>
+                        <td><%= students[i].firstName %></td>
+                        <td><%= students[i].lastName %></td>
+                        <td><%= students[i].email %></td>
+                        <td><%= students[i].phone %></td>
+                        <td><%= students[i].validated %></td>
+                        <td><%= students[i].admin %></td>
+                        <td>
+                            <a href="javascript:{}" onclick="openModal(event, '<%= JSON.stringify(students[i]) %>')">
+                                m
+                            </a>
+                            <a href="javascript:{}" onclick="confirmAction(event, '<%= students[i].firstName %>', '<%= students[i].id %>')">
+                                x
+                            </a>
+                        </td>
+                    </tr>
+                    <% } %>
+
                 <% } %>
             </tbody>
         </table>

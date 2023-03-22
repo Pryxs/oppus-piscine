@@ -1,10 +1,8 @@
-class Student{
-    constructor(model) {
-        this.model = model;
-    }    
+import {Students} from '../../models/Students.js'
 
+export const StudentsService = () => {
 
-    clean = (obj) => {
+    const clean = (obj) => {
         for (var propName in obj) {
             if (obj[propName] === '') {
                 delete obj[propName];
@@ -13,33 +11,30 @@ class Student{
         return obj
     }
 
-
-    getAll = async (properties, sort) => {
+    const getAll = async (properties, sort) => {
         if(properties){
-            properties = this.clean(properties)
+            properties = clean(properties)
             sort = {[properties?.sort] : parseInt(properties?.order)}
             delete properties?.sort;
             delete properties?.order;
         }
-
-        console.log(properties)
-        console.log(sort)
-
+        
         try{
-            const res = await this.model.find({...properties}).sort({...sort});
+            const res = await Students.find({...properties}).sort({...sort});
             return res
         }catch(err){
             console.error('Failed to get students', err)
+            throw 'Failed to get students';
         }
     }
 
-    create = async data => {
+    const create = async data => {
         const base = {
             validated: 'in progress',
             admin: false
         }
 
-        const newStudent = new this.model({ 
+        const newStudent = new Students({ 
             ...data, ...base
         });
 
@@ -48,28 +43,34 @@ class Student{
             console.log(res)
         }catch(err){
             console.log('Failed to save student', err)
+            throw 'Failed to save student';
         }
     }
 
-    update = async (id, data) => {
+    const update = async (id, data) => {
         try{
-            const res = await this.model.findByIdAndUpdate(id, data)
+            const res = await Students.findByIdAndUpdate(id, data)
             console.log(res)
         }catch(err){
             console.log('Failed to update student', err)
+            throw 'Failed to update student';
         }
     }
 
-    delete = async id => {
+    const remove = async id => {
         try{
-            const res = await this.model.deleteOne({ _id: id})
+            const res = await Students.deleteOne({ _id: id})
             console.log(res)
         }catch(err){
-            console.log('Failed to save student', err)
+            console.log('Failed to delete student', err)
+            throw 'Failed to delete student';
         }
     }
+
+    return {
+        getAll,
+        create,
+        update,
+        remove
+    }
 }
-
-
-
-exports.Student = Student

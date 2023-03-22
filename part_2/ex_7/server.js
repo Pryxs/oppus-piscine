@@ -1,44 +1,31 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const config = require('../../part_1/config');
-const {studentSchemaObject} = require('../studentSchema');
-const {Student} = require('./students');
+import express from 'express';
+import path from 'path'
+import { fileURLToPath } from 'url';
+import {config} from '../config.js'
+import { dbConnect } from './database.js';
+import { StudentController } from './modules/students/student.controller.js';
 
-
+const dirname =  path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-app.set('views', './part_2/views');
+app.set('views', dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use(express.json()) 
 app.use(express.urlencoded({ extended: true }))
 
-
-/*
-    DB INIT
-*/
-
-const {host, port, name} = config.db
-
-const dbConnect = async() => {
-    try{
-        await mongoose.connect(`mongodb://${host}:${port}/${name}`)
-        console.log('Connection successfull')
-    } catch(error){
-        console.log('Connection failed')
-    }
+const start = async() => {
+    await dbConnect()
+    
+    app.use('/', StudentController)
+    app.use('/students/:id', StudentController)
+    
+    app.listen(config.app.port)
 }
 
-dbConnect();
+start()
 
 
-/*
-    MODELS
-*/
-
-const studentSchema = new mongoose.Schema(studentSchemaObject)
-const StudentModel = mongoose.model('students', studentSchema)
-const student = new Student(StudentModel)
 
 
 /*
@@ -46,41 +33,41 @@ const student = new Student(StudentModel)
 */
 
 
-app.get('/', (req, res) => {
-    student.getAll(req.query).then(students => {
-        res.render('studentsList', {students})
-    }).catch(err => {
-        res.send(err)
-    })
-})
+// app.get('/', (req, res) => {
+//     student.getAll(req.query).then(students => {
+//         res.render('studentsList', {students})
+//     }).catch(err => {
+//         res.send(err)
+//     })
+// })
 
-app.post('/', (req, res) => {
-    student.create(req.body).then(students => {
-        res.redirect('/');
-    }).catch(err => {
-        res.send(err)
-    })
-})
+// app.post('/', (req, res) => {
+//     student.create(req.body).then(students => {
+//         res.redirect('/');
+//     }).catch(err => {
+//         res.send(err)
+//     })
+// })
 
-app.put('/students/:id', (req, res) => {
-    student.update(req.params.id, req.body).then(response => {
-        console.log(repsonse)
-    }).catch(err => {
-        res.send(err)
-    })
-})
+// app.put('/students/:id', (req, res) => {
+//     student.update(req.params.id, req.body).then(response => {
+//         console.log(repsonse)
+//     }).catch(err => {
+//         res.send(err)
+//     })
+// })
 
-app.delete('/students/:id', (req, res) => {
-    student.delete(req.params.id).then(response => {
-        console.log(repsonse)
-    }).catch(err => {
-        res.send(err)
-    })
-})
+// app.delete('/students/:id', (req, res) => {
+//     student.delete(req.params.id).then(response => {
+//         console.log(repsonse)
+//     }).catch(err => {
+//         res.send(err)
+//     })
+// })
 
 
 
-app.listen(config.app.port)
+// app.listen(config.app.port)
 
 
 

@@ -1,5 +1,6 @@
+import mongoose from 'mongoose';
 
-const studentSchemaObject = {
+const studentSchemaObject = new mongoose.Schema({
     firstName : {
         type: String,
         required: true
@@ -28,6 +29,6 @@ const studentSchemaObject = {
         }
     },
     admin : Boolean
-}
+})
 
-exports.studentSchemaObject = studentSchemaObject
+export const Students = mongoose.model('students', studentSchemaObject)
