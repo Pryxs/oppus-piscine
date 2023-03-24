@@ -2,6 +2,8 @@ import {UserService} from '../user/user.service.js'
 import {BcryptHelper} from '../../helpers/bcrypt.helper.js'
 import {JwtHelper} from '../../helpers/jwt.helper.js'
 
+const jwtHelper = JwtHelper()
+
 export const AuthService = () => {
 
     const login = async data => {
@@ -12,9 +14,8 @@ export const AuthService = () => {
         const match = bcryptHelper.decrypt(data.password, user.password)
 
         if(match){
-            const {username, email} = user
-            const jwtHelper = JwtHelper()
-            const jwt = jwtHelper.signJWT({username, email})
+            const {username, email, admin} = user
+            const jwt = jwtHelper.signJWT({username, email, admin})
 
             return jwt;
         }
@@ -22,8 +23,13 @@ export const AuthService = () => {
         throw 'Password or Username incorect'
     }
 
+    const isAdmin = async jwt => {
+        return jwtHelper.decodJWT(jwt).admin
+    }
+
 
     return {
         login,
+        isAdmin
     }
 }

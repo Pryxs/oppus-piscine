@@ -1,7 +1,7 @@
 import {Products} from '../../models/Products.js'
+import {cleaner} from '../../helpers/cleaner.helper.js'
 
 export const ProductService = () => {
-
     const get = async properties => {   
         try{
             const product = await Products.findOne({...properties})
@@ -11,9 +11,10 @@ export const ProductService = () => {
         }
     }
 
-    const getAll = async () => {   
+    const getAll = async data => {   
         try{
-            const products = await Products.find().select('-__v').populate("categories", "-__v")
+            data = cleaner.cleanObj(data)
+            const products = await Products.find(data).select('-__v').populate("categories", "-__v")
             return products;
         } catch(err){
             throw 'Failed to find products'

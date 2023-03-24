@@ -8,6 +8,7 @@ export const validateUser = (user) => {
         username: Joi.string().alphanum().required(),
         email: Joi.string().email().required(),
         password: Joi.string().min(5).required()
+        // admin: Joi.boolean().required()
     })
     return schema.validate(user)
 }

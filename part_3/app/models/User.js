@@ -8,12 +8,18 @@ const userSchemaObject = new mongoose.Schema({
     },
     email : {
         type : String,
-        validate : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        validate : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+        required: true
     },
     password : {
         type: String,
         minlength: 5,
+        required: true
     },
+    admin : {
+        type : Boolean,
+        required: true
+    }
 })
 
 export const Users = mongoose.model('users', userSchemaObject)

@@ -22,7 +22,8 @@ export const UserService = () => {
             const newUser = new Users({
                 username, 
                 email,
-                password : hash
+                password : hash,
+                admin : false
             })
             
             let user = await newUser.save()

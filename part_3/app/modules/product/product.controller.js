@@ -12,7 +12,7 @@ ProductController.get('/:id?', async (req, res) => {
     try{
         const products = req.params.id 
             ? await productService.get({'_id' : req.params.id}) 
-            : await productService.getAll()
+            : await productService.getAll(req.query)
 
         res.status(200).json(products)
     } catch(err){
