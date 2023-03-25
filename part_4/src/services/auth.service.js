@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:4242/";
+const API_URL = process.env.REACT_APP_API_URL
 
 const AuthService = () => {
   const login = async formData => {
@@ -13,7 +13,7 @@ const AuthService = () => {
       return response.data
     }
 
-    throw response
+    console.log("Pas de token dans la réponse")
   }
 
   const logout = () => {

@@ -70,7 +70,7 @@ export default function Home() {
                 <button onClick={launchSort}>trier</button>
             </div>
 
-            <ProductList products={products} focusOnProduct={focusOnProduct} /> 
+            <ProductList products={products} onClick={focusOnProduct} /> 
 
             <Modal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}>
                 <span>{focusedProduct.name}</span>

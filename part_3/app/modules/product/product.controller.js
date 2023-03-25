@@ -38,6 +38,15 @@ ProductController.put('/:id', [validatorMidlleware(validateProduct, "body"), aut
     }
 })
 
+ProductController.delete('/:id', authentificationMidlleware(),async (req, res) => {
+    try{
+        await productService.remove(req.params.id)
+        res.status(200).json('Product deleted')
+    } catch(err){
+        res.status(400).json(err)
+    }
+})
+
 
 
 

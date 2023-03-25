@@ -43,10 +43,19 @@ export const ProductService = () => {
         }
     }
 
+    const remove = async id => {
+        try{
+            await Products.deleteOne({ _id : id })
+        }catch(err){
+            throw 'Failed to delete product';
+        }
+    }
+
     return {
         get,
         getAll,
         create,
-        update
+        update,
+        remove
     }
 }

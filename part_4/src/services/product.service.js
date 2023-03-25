@@ -1,7 +1,7 @@
 import axios from "axios";
 import AuthService from "./auth.service";
 
-const API_URL = "http://localhost:4242/";
+const API_URL = process.env.REACT_APP_API_URL
 
 const ProductService = () => {
   const getAll = async () => {
@@ -16,6 +16,19 @@ const ProductService = () => {
   const get = async name => {
     try{
         let response = await axios.get(API_URL + "products", { params: { name } })
+        return response.data
+    } catch(err) {
+        console.log(err.response.data)
+    }
+  }
+
+  const create = async data => {
+    try{
+        let response = await axios.post(API_URL + "products", data, {
+          headers: {
+            'Authorization': `Basic ${AuthService.getCurrentUser()}`
+          }
+        })
         return response.data
     } catch(err) {
         console.log(err.response.data)
@@ -38,10 +51,25 @@ const ProductService = () => {
     }
   }
 
+  const remove = async id => {
+    try{
+        const response = await axios.delete(API_URL + "products/" + id, {
+            headers: {
+              'Authorization': `Basic ${AuthService.getCurrentUser()}`
+            }
+        })
+        return response.data;
+    } catch(err) {
+        console.log(err.response.data)
+    }
+  }
+
   return {
     get,
     getAll,
-    update
+    create,
+    update,
+    remove
   }
 }
 
