@@ -1,6 +1,37 @@
 import { useState } from 'react';
 import ProductService from "../../services/product.service";
 
+import styled from '@emotion/styled'
+import {BaseInput} from '../../styles/BaseInput'
+import {BaseButton} from '../../styles/BaseButton'
+
+const Form = styled.form`
+display: flex;
+gap: 2rem;
+align-items: flex-end;
+
+    div{
+        label{
+            margin-bottom: .5em;
+            display: block;
+        }
+
+        &:last-child{
+
+        }
+    }
+`
+
+const Input = styled.input`
+  ${BaseInput}
+`
+
+const InputSubmit = styled.input`
+  ${BaseButton}
+  background-color: ${props => props.theme.dynamic};
+  padding: .5em 1em;
+`
+
 const ProductAdd = ({getProducts}) =>{
     const [formData, setFormData] = useState({});
 
@@ -21,26 +52,26 @@ const ProductAdd = ({getProducts}) =>{
     }
     return(
         <div className="form">
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <div>
-                    <label>Nom : </label>
-                    <input type="text" name="name" onChange={(e) => handleChange(e)} value={formData.name || ''} required />
+                    <label>Nom </label>
+                    <Input type="text" name="name" onChange={(e) => handleChange(e)} value={formData.name || ''} required />
                 </div>
 
                 <div>
                     <label>Prix </label>
-                    <input type="text" name="price" onChange={(e) => handleChange(e)} value={formData.price || ''} required />
+                    <Input type="text" name="price" onChange={(e) => handleChange(e)} value={formData.price || ''} required />
                 </div>
 
                 <div>
                     <label>Description </label>
-                    <input type="text" name="description" onChange={(e) => handleChange(e)} value={formData.description || ''} />
+                    <Input type="text" name="description" onChange={(e) => handleChange(e)} value={formData.description || ''} />
                 </div>
 
                 <div>
-                    <input type="submit" value="Ajouter"/>
+                    <InputSubmit type="submit" value="+"/>
                 </div>
-            </form>
+            </Form>
         </div>
     )
 }

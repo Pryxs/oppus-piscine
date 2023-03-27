@@ -3,6 +3,16 @@ import AuthService from '../services/auth.service';
 import { useNavigate, Link } from "react-router-dom";
 import {UserContext} from '../contexts/UserContext';
 
+import styled from '@emotion/styled'
+import {BaseButton} from '../styles/BaseButton'
+
+
+const Button = styled.button`
+    ${BaseButton}
+    color: ${props => props.theme.textColor};
+    background-color: ${props => props.theme.secondary};
+`
+
 
 const Navbar = () =>{
     const navigate = useNavigate()
@@ -25,10 +35,9 @@ const Navbar = () =>{
                     <Link to={'management'}>Gestionnaire</Link>
                 </li>
                 }
-                <li>
-                    <button onClick={logout}>Déconnexion</button>
-                </li>
             </ul>
+
+            <Button onClick={logout}>Déconnexion</Button>
         </nav>
     )
 }

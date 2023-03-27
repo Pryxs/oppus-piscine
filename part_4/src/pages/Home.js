@@ -57,25 +57,14 @@ export default function Home() {
 
             <ProductSearch handleChange={handleChange} launchResearch={launchResearch} search={search}/>
 
-            <div className="products_sort">
-                <select name="categories" defaultValue="">
-                    <option value="" disabled>Choisir une catéogrie</option>
-
-                    {categories.length && categories.map((category, index) => (
-                        <option key={index} value={category.name}>{category.name}</option>
-                    ))} 
-
-                </select>
-
-                <button onClick={launchSort}>trier</button>
-            </div>
-
             <ProductList products={products} onClick={focusOnProduct} /> 
 
             <Modal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}>
-                <span>{focusedProduct.name}</span>
-                <span>{focusedProduct.price}</span>
-                <span>{focusedProduct.description}</span>
+                <div>
+                    <span>{focusedProduct.name}</span>
+                    <span> {focusedProduct.price}€</span>
+                    <p>{focusedProduct.description}</p>
+                </div>
             </Modal>
         </div>
     )

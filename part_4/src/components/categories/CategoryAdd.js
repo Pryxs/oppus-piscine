@@ -1,5 +1,32 @@
-import { useState } from 'react';
-import CategoryService from "../../services/category.service";
+import { useState } from 'react'
+import CategoryService from "../../services/category.service"
+
+import styled from '@emotion/styled'
+import {BaseInput} from '../../styles/BaseInput'
+import {BaseButton} from '../../styles/BaseButton'
+
+const Form = styled.form`
+display: flex;
+gap: 2rem;
+align-items: flex-end;
+
+    div{
+        label{
+            margin-bottom: .5em;
+            display: block;
+        }
+    }
+`
+
+const Input = styled.input`
+  ${BaseInput}
+`
+
+const InputSubmit = styled.input`
+  ${BaseButton}
+  background-color: ${props => props.theme.dynamic};
+  padding: .5em 1em;
+`
 
 const CategoryAdd = ({getCategories}) =>{
     const [formData, setFormData] = useState({});
@@ -21,16 +48,16 @@ const CategoryAdd = ({getCategories}) =>{
     }
     return(
         <div className="form">
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <div>
                     <label>Nom : </label>
-                    <input type="text" name="name" onChange={(e) => handleChange(e)} value={formData.name || ''} required />
+                    <Input type="text" name="name" onChange={(e) => handleChange(e)} value={formData.name || ''} required />
                 </div>
 
                 <div>
-                    <input type="submit" value="Ajouter"/>
+                    <InputSubmit type="submit" value="+"/>
                 </div>
-            </form>
+            </Form>
         </div>
     )
 }

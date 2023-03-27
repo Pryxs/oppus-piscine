@@ -20,6 +20,14 @@ const AuthService = () => {
     localStorage.removeItem("user");
   }
 
+  const register = async formData => {
+    let response = await axios.post(API_URL + "register", {
+      ...formData
+    })
+
+    return response;
+  }
+
   const getUserPermission = async () => {
     const token = getCurrentUser()
     const response = await axios.post(API_URL + "login/decrypt", {
@@ -35,6 +43,7 @@ const AuthService = () => {
   return {
     login,
     logout,
+    register,
     getUserPermission,
     getCurrentUser,
   }

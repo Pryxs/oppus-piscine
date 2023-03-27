@@ -9,6 +9,30 @@ import ProductAdd from "../components/products/ProductAdd";
 import CategoryList from "../components/categories/CategoryList";
 import CategoryAdd from "../components/categories/CategoryAdd";
 
+import styled from '@emotion/styled'
+import {BaseInput} from '../styles/BaseInput'
+import {BaseButton} from '../styles/BaseButton'
+
+const Form = styled.form`
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+
+    div:last-child{
+        margin-top: 2rem;
+    }
+`
+
+const Input = styled.input`
+    ${BaseInput}
+`
+
+const InputSubmit = styled.input`
+    ${BaseButton}
+    background-color: ${props => props.theme.dynamic};
+    padding: .5em 1em;
+`
+
 
 export default function Management() {
     // STATE
@@ -111,23 +135,27 @@ export default function Management() {
 
     const productActions = [
         {
-            text : 'Supprimer',
-            function : deleteProduct
+            text : 'Modifier',
+            class : 'button-update',
+            function : updateProduct
         },
         {
-            text : 'Modifier',
-            function : updateProduct
+            text : 'Supprimer',
+            class : 'button-delete',
+            function : deleteProduct
         }
     ]
 
     const categoryActions = [
         {
-            text : 'Supprimer',
-            function : deleteCategory
+            text : 'Modifier',
+            class : 'button-update',
+            function : updateCategory
         },
         {
-            text : 'Modifier',
-            function : updateCategory
+            text : 'Supprimer',
+            class : 'button-delete',
+            function : deleteCategory
         }
     ]
 
@@ -136,40 +164,38 @@ export default function Management() {
             <div className="products">
                 <h1>Liste des produits</h1>
 
-                <ProductList products={products} actions={productActions} /> 
-
                 <ProductAdd getProducts={getProducts}/>
 
+                <ProductList products={products} actions={productActions} /> 
+
                 <Modal key="tata" modalIsOpen={modalProductIsOpen} setModalIsOpen={setModalProductIsOpen}>
-                    product
-                    <form onSubmit={(e) => handleProductSubmit(e)}>
-                        <input type="text" name="name" onChange={(e) => handleProductChange(e)} value={focusedProduct.name} required />
-                        <input type="text" name="price" onChange={(e) => handleProductChange(e)} value={focusedProduct.price} required />
-                        <input type="text" name="description" onChange={(e) => handleProductChange(e)} value={focusedProduct.description || ''}  />
+                    <Form onSubmit={(e) => handleProductSubmit(e)}>
+                        <Input type="text" name="name" onChange={(e) => handleProductChange(e)} value={focusedProduct.name} required />
+                        <Input type="text" name="price" onChange={(e) => handleProductChange(e)} value={focusedProduct.price} required />
+                        <Input type="text" name="description" onChange={(e) => handleProductChange(e)} value={focusedProduct.description || ''}  />
 
                         <div>
-                            <input type="submit" value="Modifier"/>
+                            <InputSubmit type="submit" value="Modifier"/>
                         </div>
-                    </form>
+                    </Form>
                 </Modal>
             </div>
 
             <div className="category">
                 <h1>Liste des catégories</h1>
 
-                <CategoryList categories={categories} actions={categoryActions} /> 
-
                 <CategoryAdd getCategories={getCategories} />
 
+                <CategoryList categories={categories} actions={categoryActions} /> 
+
                 <Modal key="toto" modalIsOpen={modalCategoryIsOpen} setModalIsOpen={setModalCategoryIsOpen}>
-                    category
-                    <form onSubmit={(e) => handleCategorySubmit(e)}>
-                        <input type="text" name="name" onChange={(e) => handleCategoryChange(e)} value={focusedCategory.name} required />
+                    <Form onSubmit={(e) => handleCategorySubmit(e)}>
+                        <Input type="text" name="name" onChange={(e) => handleCategoryChange(e)} value={focusedCategory.name} required />
 
                         <div>
-                            <input type="submit" value="Modifier"/>
+                            <InputSubmit type="submit" value="Modifier"/>
                         </div>
-                    </form>
+                    </Form>
                 </Modal>
             </div>
         </div>
