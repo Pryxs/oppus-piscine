@@ -66,24 +66,6 @@ function App() {
         gap: 2rem;
         height: 100vh;
 
-        nav{
-          height: 100%;
-          background-color: ${theme.primary};
-          padding: 2rem;
-
-          ul{
-            margin-bottom: 3rem;
-
-            li{
-              margin-bottom: 1rem;
-
-              a{
-                color: ${theme.textColor}
-              }
-            }
-          }
-        }
-
         ul{
           list-style-type: none;
           padding: 0;
@@ -101,17 +83,17 @@ function App() {
               <Routes>
                 {user ? (
                   <>
-                    <Route exact path="/" element={<Home />}/>
+                    <Route path="/" element={<Home />}/>
                     {admin &&
-                      <Route exact path="/management" element={<Management />}/>
+                      <Route path="/management" element={<Management />}/>
                     }
-                    <Route exact path="*" element={<Error />}/>
+                    <Route path="*" element={<Error />}/>
                   </>
                 ) : (
                   <>
-                    <Route exact path="/login" element={<Login />}/>
-                    <Route exact path="/register" element={<Register />}/>
-                    <Route exact path="*" element={<Login />}/>
+                    <Route path="/login" element={<Login />}/>
+                    <Route path="/register" element={<Register />}/>
+                    <Route path="*" element={<Login />}/>
                   </>
                 )}
               </Routes>

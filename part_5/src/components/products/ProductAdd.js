@@ -5,13 +5,13 @@ import {BaseInput} from '../../styles/BaseInput'
 import {BaseButton} from '../../styles/BaseButton'
 
 const Form = styled.form`
-display: flex;
-gap: 2rem;
-align-items: flex-end;
+    display: flex;
+    gap: .5rem;
+    align-items: flex-end;
 
     div{
         label{
-            margin-bottom: .5em;
+            margin-bottom: .3em;
             display: block;
         }
 
@@ -22,13 +22,13 @@ align-items: flex-end;
 `
 
 const Input = styled.input`
-  ${BaseInput}
+    ${BaseInput}
 `
 
 const InputSubmit = styled.input`
-  ${BaseButton}
-  background-color: ${props => props.theme.dynamic};
-  padding: .5em 1em;
+    ${BaseButton}
+    background-color: ${props => props.theme.dynamic};
+    padding: .5em 1em;
 `
 
 const ProductAdd = ({handleCreateProduct}) =>{
@@ -41,6 +41,7 @@ const ProductAdd = ({handleCreateProduct}) =>{
     const handleSubmit = async (e) => {
         e.preventDefault()
         handleCreateProduct(formData)
+        setFormData({})
     }
     return(
         <div className="form">

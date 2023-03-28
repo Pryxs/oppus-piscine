@@ -37,10 +37,12 @@ const ProductService = () => {
   const update = async (id, data, token) => {  
     try{
         const {name, price, description} = data
+        const categories = data.categories.map(category => category['_id'])
         const response = await axios.put(API_URL + "products/" + id, {
           name,
           price,
-          description
+          description,
+          categories
         }, {
             headers: {
               'Authorization': `Bearer ${token}`

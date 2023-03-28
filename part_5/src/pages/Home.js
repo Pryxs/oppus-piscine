@@ -46,7 +46,7 @@ export default function Home() {
             <Modal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}>
                 <div>
                     <span>{focusedProduct.name}</span>
-                    <span> {focusedProduct.price}€</span>
+                    <span> - {focusedProduct.price}€</span>
                     <p>{focusedProduct.description}</p>
                 </div>
             </Modal>

@@ -7,6 +7,32 @@ import styled from '@emotion/styled'
 import {BaseButton} from '../styles/BaseButton'
 
 
+const Nav = styled.nav`
+    background-color: ${props => props.theme.primary};
+    padding: 3rem 3rem 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    ul{
+        li{
+            margin-bottom: 2rem;
+
+        a{
+            color: inherit;
+            text-decoration: inherit;
+            cursor: pointer;
+            font-size: 20px;
+
+                &:hover{
+                    text-decoration: underline;
+                    color: ${props => props.theme.dynamic};
+                }
+            }
+        }
+    }
+`
+
 const Button = styled.button`
     ${BaseButton}
     color: ${props => props.theme.textColor};
@@ -25,7 +51,7 @@ const Navbar = () =>{
     }
 
     return(
-        <nav>
+        <Nav>
             <ul>
                 <li>
                     <Link to={''}>Accueil</Link>
@@ -38,7 +64,7 @@ const Navbar = () =>{
             </ul>
 
             <Button onClick={logoutEvent}>Déconnexion</Button>
-        </nav>
+        </Nav>
     )
 }
 

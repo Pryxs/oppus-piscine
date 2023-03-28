@@ -4,26 +4,26 @@ import {BaseInput} from '../../styles/BaseInput'
 import {BaseButton} from '../../styles/BaseButton'
 
 const Form = styled.form`
-display: flex;
-gap: 2rem;
-align-items: flex-end;
+    display: flex;
+    gap: .5rem;
+    align-items: flex-end;
 
     div{
         label{
-            margin-bottom: .5em;
+            margin-bottom: .3em;
             display: block;
         }
     }
 `
 
 const Input = styled.input`
-  ${BaseInput}
+    ${BaseInput}
 `
 
 const InputSubmit = styled.input`
-  ${BaseButton}
-  background-color: ${props => props.theme.dynamic};
-  padding: .5em 1em;
+    ${BaseButton}
+    background-color: ${props => props.theme.dynamic};
+    padding: .5em 1em;
 `
 
 const CategoryAdd = ({handleCreateCategory}) =>{
@@ -36,6 +36,7 @@ const CategoryAdd = ({handleCreateCategory}) =>{
     const handleSubmit = async (e) => {
         e.preventDefault()
         handleCreateCategory(formData)
+        setFormData({})
     }
 
     return(

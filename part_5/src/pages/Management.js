@@ -75,6 +75,18 @@ export default function Management() {
         dispatch(setFocusedProduct({...focusedProduct, [e.target.name] : e.target.value}))
     }
 
+    const handleProductCategoriesChange = (e) => {
+        const isAlreadyInCategories = focusedProduct.categories.filter(category => category['_id'] === e.target.value)
+
+        if(isAlreadyInCategories.length){
+            dispatch(setFocusedProduct({...focusedProduct, categories : focusedProduct.categories.filter(category => category['_id'] !== e.target.value)}))
+        } else {
+            dispatch(setFocusedProduct({...focusedProduct, categories : [...focusedProduct.categories, {'_id' : e.target.value}]}))
+        }
+       
+    }
+
+
     const handleProductSubmit = async (e) => {
         e.preventDefault()
         dispatch(updateProduct(focusedProduct)) 
@@ -150,6 +162,13 @@ export default function Management() {
                         <Input type="text" name="name" onChange={(e) => handleProductChange(e)} value={focusedProduct.name || ''} required />
                         <Input type="text" name="price" onChange={(e) => handleProductChange(e)} value={focusedProduct.price || ''} required />
                         <Input type="text" name="description" onChange={(e) => handleProductChange(e)} value={focusedProduct.description || ''}  />
+
+                        <select name="category" id="category" multiple value={focusedProduct.categories ? focusedProduct.categories.map(e => e['_id']) : []} onChange={() =>console.log("")}>
+                            <option value="" hidden selected>Choose here</option>
+                            {categories.map(category => (
+                                <option onClick={(e) => handleProductCategoriesChange(e)} key={category['_id']} value={category['_id']}>{category.name}</option>
+                            ))}
+                        </select>
 
                         <div>
                             <InputSubmit type="submit" value="Modifier"/>

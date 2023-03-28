@@ -19,12 +19,16 @@ const Div = styled.div`
         display: flex;
         flex-direction: column;
         gap: 2rem;
-        min-width: 200px;
+        min-width: 300px;
 
         button{
             width: fit-content;
             align-self: end;
             cursor: pointer;
+            border: none;
+            background: transparent;
+            color: ${props => props.theme.textColor};
+            font-weight: bold;
         }
     }
 `
@@ -37,7 +41,7 @@ const Modal = (props) =>{
     return(
         <Div className="modal-container">
             <div className="modal"> 
-                <button onClick={() => props.setModalIsOpen(false)}>x</button>
+                <button onClick={() => props.setModalIsOpen(false)}>X</button>
                 {props.children}
             </div>
         </Div>

@@ -11,8 +11,8 @@ const themes = {
         name : 'dark',
         primary : '#222',
         secondary : '#37474F',
-        dynamic : '#0075BC',
-        textColor : '#F5F5F5'
+        dynamic : '#0099F7',
+        textColor : '#EEE'
     }
 }
 

@@ -1,9 +1,14 @@
 import styled from '@emotion/styled'
 
 const Ul = styled.ul`
+    ${props => props.theme.name === 'dark' 
+    ? `box-shadow: rgba(150, 150, 150, 0.2) 0px 7px 29px 0px;`
+    : `box-shadow: rgba(100, 100, 100, 0.2) 0px 7px 29px 0px;`
+    }
+    
     li{
         display: flex;
-        padding: .5em 1em;
+        padding: .7em 1em;
 
         span{
             margin-right: auto;
