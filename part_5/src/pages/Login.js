@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { loginUser } from '../features/auth/authActions'
 
 import styled from '@emotion/styled'
@@ -56,6 +56,7 @@ export default function Login(props) {
         username : 'admin',
         password : 'azerty'
     });
+
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
@@ -65,13 +66,8 @@ export default function Login(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        try{
-            dispatch(loginUser(formData))
-            navigate('/')
-        } catch(err){
-            setErrorMessage('Nom de compte ou mot de passe incorrect')
-            console.log('Une erreur est surevenu')
-        }
+        dispatch(loginUser(formData))
+        navigate('/')
     }
 
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-
-import AuthService from "../services/auth.service";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { register } from '../features/auth/authActions'
 
 import styled from '@emotion/styled'
 import {BaseInput} from '../styles/BaseInput'
@@ -40,9 +40,10 @@ const Input = styled.input`
 `
 
 export default function Register(props) {
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({})
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name] : e.target.value})
@@ -50,12 +51,8 @@ export default function Register(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        try{
-            const res = await AuthService.register(formData)   
-            navigate('/login')
-        } catch(err){
-            console.log('Une erreur est surevenu')
-        }
+        dispatch(register(formData))
+        navigate('/login')
     }
 
 
