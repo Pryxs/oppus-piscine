@@ -8,8 +8,10 @@ import {
 import { ThemeProvider } from '@emotion/react'
 import {Global, css} from '@emotion/react'
 import themes from './styles/themes'
-import { useSelector, useDispatch } from 'react-redux'
-import { isAdmin } from './features/auth/authActions'
+
+import { connect } from 'react-redux'
+import { checkUserPermission } from './features/auth/authThunks'
+import { getUserSelector, isAdminSelector } from './features/auth/authSlice'
 
 import Home from './pages/Home'
 import Management from './pages/Management'
@@ -19,16 +21,13 @@ import Error from './pages/Error'
 import BaseLayout from './components/layouts/BaseLayout'
 
 
-function App() {
-  const user = useSelector((state) => state.auth.user)
-  const admin = useSelector((state) => state.auth.isAdmin)
+function App({user, isAdmin, checkUserPermission}) {
   const [theme, setTheme] = useState(themes.lightMode);
-  const dispatch = useDispatch()
 
   useEffect(() => {
     console.log({user})
-    if(user) dispatch(isAdmin(user))
-  }, [user, dispatch]);
+    if(user) checkUserPermission(user)
+  }, [user]);
 
 
   // THEME STUFF
@@ -73,6 +72,17 @@ function App() {
       }
     }
   `
+
+  // const ButtonStyle = styled.div({
+  //   backgroundColor: 'red',
+  // })
+
+  // const button = styled.div(({color}) => ({
+  //   backgroundColor: color,
+  //   'h1': {
+
+  //   }
+  // }))
   
   return (
     <Router>
@@ -84,7 +94,7 @@ function App() {
                 {user ? (
                   <>
                     <Route path="/" element={<Home />}/>
-                    {admin &&
+                    {isAdmin &&
                       <Route path="/management" element={<Management />}/>
                     }
                     <Route path="*" element={<Error />}/>
@@ -103,4 +113,16 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    user : getUserSelector(state),
+    isAdmin : isAdminSelector(state)
+  }
+}
+
+const mapDispatchToProps = {
+  checkUserPermission,
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

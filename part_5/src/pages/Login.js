@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { useDispatch } from 'react-redux'
-import { loginUser } from '../features/auth/authActions'
+import { connect } from 'react-redux'
+import { loginUser } from '../features/auth/authThunks'
 
 import styled from '@emotion/styled'
 import {BaseInput} from '../styles/BaseInput'
 import {BaseButton} from '../styles/BaseButton'
+import { getUserSelector, isAdminSelector } from "../features/auth/authSlice";
 
 const Form = styled.form`
   background-color: ${props => props.theme.primary};
@@ -50,7 +51,7 @@ const Input = styled.input`
   ${BaseInput}
 `
 
-export default function Login(props) {
+const Login = ({loginUser}) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
         username : 'admin',
@@ -58,7 +59,6 @@ export default function Login(props) {
     });
 
     const navigate = useNavigate();
-    const dispatch = useDispatch()
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name] : e.target.value})
@@ -66,7 +66,7 @@ export default function Login(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        dispatch(loginUser(formData))
+        loginUser(formData)
         navigate('/')
     }
 
@@ -95,3 +95,15 @@ export default function Login(props) {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+  return {
+  
+  }
+}
+
+const mapDispatchToProps = {
+  loginUser,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

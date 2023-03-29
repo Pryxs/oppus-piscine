@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getProducts, searchProducts } from './productActions'
+import { getProducts, searchProducts } from './productThunks'
 
 const initialState = {
     products: [],
@@ -25,6 +25,9 @@ const productSlice = createSlice({
 })
 
 export const { setFocusedProduct } = productSlice.actions
+
+export const getAllProductsSelector = state => state.product.products
+export const getFocusedProductSelector = state => state.product.focusedProduct
 
 export default productSlice.reducer
 

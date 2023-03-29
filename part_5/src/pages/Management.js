@@ -1,8 +1,8 @@
 import {useState,  useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { getProducts, deleteProduct, updateProduct, createProduct } from '../features/product/productActions'
+import { getProducts, deleteProduct, updateProduct, createProduct } from '../features/product/productThunks'
 import { setFocusedProduct } from '../features/product/productSlice'
-import { getCategories, deleteCategory, updateCategory, createCategory } from '../features/category/categoryActions'
+import { getCategories, deleteCategory, updateCategory, createCategory } from '../features/category/categoryThunks'
 import { setFocusedCategory } from '../features/category/categorySlice'
 
 import Modal from '../components/Modal'

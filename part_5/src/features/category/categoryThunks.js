@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import CategoryService from "../../services/category.service";
-import { getProducts } from '../product/productActions'
+import { getProducts } from '../product/productThunks'
 
 
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
-import { register } from '../features/auth/authActions'
+import { register } from '../features/auth/authThunks'
 
 import styled from '@emotion/styled'
 import {BaseInput} from '../styles/BaseInput'

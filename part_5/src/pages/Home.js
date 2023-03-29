@@ -3,35 +3,32 @@ import Modal from "../components/Modal";
 import ProductSearch from "../components/products/ProductSearch";
 import ProductList from "../components/products/ProductList";
 
-import { useSelector, useDispatch } from 'react-redux'
-import { getProducts, searchProducts } from '../features/product/productActions'
+import { connect } from 'react-redux'
+import { searchProducts, getProducts } from '../features/product/productThunks'
+import { getAllProductsSelector, getFocusedProductSelector } from '../features/product/productSlice'
+
 import { setFocusedProduct } from '../features/product/productSlice'
 
-export default function Home() {
-    const products = useSelector((state) => state.product.products)
-    const focusedProduct = useSelector((state) => state.product.focusedProduct)
+const Home = ({products, focusedProduct, setFocusedProduct, searchProducts, getProducts}) => {
     const [search, setSearch] = useState("");
-
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-
-    const dispatch = useDispatch()
-    
+    const [modalIsOpen, setModalIsOpen] = useState(false);    
 
     useEffect(() => {
-        dispatch(getProducts())
-    }, [dispatch]);
+        getProducts()
+    }, []);
+    
 
     const handleChange = (e) => {
         setSearch(e.target.value)
     }
 
     const launchResearch = async () => {
-        dispatch(searchProducts(search))
+        searchProducts(search)
         setSearch('')
     }
 
     const focusOnProduct = (index) => {
-        dispatch(setFocusedProduct(products[index]))
+        setFocusedProduct(products[index])
         setModalIsOpen(true)
     }
 
@@ -45,11 +42,26 @@ export default function Home() {
 
             <Modal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}>
                 <div>
-                    <span>{focusedProduct.name}</span>
-                    <span> - {focusedProduct.price}€</span>
-                    <p>{focusedProduct.description}</p>
+                    <span>{focusedProduct?.name}</span>
+                    <span> - {focusedProduct?.price}€</span>
+                    <p>{focusedProduct?.description}</p>
                 </div>
             </Modal>
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        products : getAllProductsSelector(state),
+        focusedProduct : getFocusedProductSelector(state)
+    }
+}
+
+const mapDispatchToProps = {
+    setFocusedProduct,
+    searchProducts,
+    getProducts
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

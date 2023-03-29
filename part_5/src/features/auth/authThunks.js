@@ -14,8 +14,8 @@ export const loginUser = createAsyncThunk(
     }
 )
 
-export const isAdmin = createAsyncThunk(
-    'auth/isAdmin',
+export const checkUserPermission = createAsyncThunk(
+    'auth/checkUserPermission',
     async (token, { rejectWithValue }) => {  
         try {
             const admin = await AuthService.getUserPermission(token)
